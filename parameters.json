@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaces_LaboratorioIA900_name": {
+            "value": null
+        },
+        "storageAccounts_laboratorioia90182329559_externalid": {
+            "value": null
+        },
+        "vaults_laboratorioia94226255521_externalid": {
+            "value": null
+        },
+        "components_laboratorioia94747397650_externalid": {
+            "value": null
+        }
+    }
+}

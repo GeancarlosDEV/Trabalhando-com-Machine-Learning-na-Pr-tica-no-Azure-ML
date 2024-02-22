@@ -1,0 +1,108 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaces_LaboratorioIA900_name": {
+            "defaultValue": "LaboratorioIA900",
+            "type": "String"
+        },
+        "storageAccounts_laboratorioia90182329559_externalid": {
+            "defaultValue": "/subscriptions/07790057-2540-426d-bde7-c29d99846491/resourceGroups/EstudosDIO/providers/Microsoft.Storage/storageAccounts/laboratorioia90182329559",
+            "type": "String"
+        },
+        "vaults_laboratorioia94226255521_externalid": {
+            "defaultValue": "/subscriptions/07790057-2540-426d-bde7-c29d99846491/resourceGroups/EstudosDIO/providers/Microsoft.Keyvault/vaults/laboratorioia94226255521",
+            "type": "String"
+        },
+        "components_laboratorioia94747397650_externalid": {
+            "defaultValue": "/subscriptions/07790057-2540-426d-bde7-c29d99846491/resourceGroups/EstudosDIO/providers/Microsoft.insights/components/laboratorioia94747397650",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces",
+            "apiVersion": "2023-10-01",
+            "name": "[parameters('workspaces_LaboratorioIA900_name')]",
+            "location": "eastus",
+            "sku": {
+                "name": "Basic",
+                "tier": "Basic"
+            },
+            "kind": "Default",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "friendlyName": "[parameters('workspaces_LaboratorioIA900_name')]",
+                "storageAccount": "[parameters('storageAccounts_laboratorioia90182329559_externalid')]",
+                "keyVault": "[parameters('vaults_laboratorioia94226255521_externalid')]",
+                "applicationInsights": "[parameters('components_laboratorioia94747397650_externalid')]",
+                "hbiWorkspace": false,
+                "managedNetwork": {
+                    "isolationMode": "Disabled"
+                },
+                "v1LegacyMode": false,
+                "publicNetworkAccess": "Enabled",
+                "discoveryUrl": "https://eastus.api.azureml.ms/discovery"
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/datastores",
+            "apiVersion": "2023-10-01",
+            "name": "[concat(parameters('workspaces_LaboratorioIA900_name'), '/workspaceartifactstore')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_LaboratorioIA900_name'))]"
+            ],
+            "properties": {
+                "credentials": {
+                    "credentialsType": "AccountKey",
+                    "secrets": {}
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/datastores",
+            "apiVersion": "2023-10-01",
+            "name": "[concat(parameters('workspaces_LaboratorioIA900_name'), '/workspaceblobstore')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_LaboratorioIA900_name'))]"
+            ],
+            "properties": {
+                "credentials": {
+                    "credentialsType": "AccountKey",
+                    "secrets": {}
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/datastores",
+            "apiVersion": "2023-10-01",
+            "name": "[concat(parameters('workspaces_LaboratorioIA900_name'), '/workspacefilestore')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_LaboratorioIA900_name'))]"
+            ],
+            "properties": {
+                "credentials": {
+                    "credentialsType": "AccountKey",
+                    "secrets": {}
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/datastores",
+            "apiVersion": "2023-10-01",
+            "name": "[concat(parameters('workspaces_LaboratorioIA900_name'), '/workspaceworkingdirectory')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_LaboratorioIA900_name'))]"
+            ],
+            "properties": {
+                "credentials": {
+                    "credentialsType": "AccountKey",
+                    "secrets": {}
+                }
+            }
+        }
+    ]
+}
